@@ -203,7 +203,20 @@
             url: "/api/produtos/" + produto.id,
             context: this,
             success: function(data){
-              console.log("Salvo OK!");
+              let produto = JSON.parse(data);
+              let linhas = $("#tabelaProdutos>tbody>tr")
+              let e = linhas.filter(function(i, e) {
+                return (e.cells[0].textContent == produto.id)
+              })
+              
+              if (e) {
+                e[0].cells[0].textContent = produto.id;
+                e[0].cells[1].textContent = produto.nome;
+                e[0].cells[2].textContent = produto.preco;
+                e[0].cells[3].textContent = produto.estoque;
+                e[0].cells[4].textContent = produto.categoria_id;
+              }
+
             },
             error: function(data){
               console.log(data);
