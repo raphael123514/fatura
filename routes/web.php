@@ -18,12 +18,13 @@ Route::get('/', function () {
 
 //CLIENTES
 
-Route::get('/clientes', 'ClientesController@index');
-Route::get('/clientes/novo', 'ClientesController@create');
-Route::post('/clientes/salvar', 'ClientesController@store');
-Route::post('/clientes/salvar/{id}', 'ClientesController@update');
-Route::get('/clientes/apagar/{id}', 'ClientesController@destroy');
-Route::get('/clientes/editar/{id}', 'ClientesController@edit');
+Route::get('/clientes', 'ClientesController@index')->name('clientes.index');
+Route::get('/clientes/listar', 'ClientesController@listar')->name('clientes.listar');
+Route::get('/clientes/novo', 'ClientesController@create')->name('clientes.novo');
+Route::post('/clientes/salvar', 'ClientesController@store')->name('clientes.salvar');
+Route::delete('/clientes/apagar/{id}', 'ClientesController@destroy')->name('clientes.apagar');
+Route::get('/clientes/editar/{id}', 'ClientesController@edit')->name('clientes.editar');
+Route::patch('/clientes/salvar/{id}', 'ClientesController@update')->name('clientes.atualizar');
 
 // PRODUTOS
 Route::get('/produtos', 'ProdutoController@indexView')->name('produtos.index');
@@ -32,5 +33,5 @@ Route::get('/produtos/novo', 'ProdutoController@create')->name('produtos.novo');
 Route::post('/produtos/salvar', 'ProdutoController@store')->name('produtos.salvar');
 Route::delete('/produtos/apagar/{id}', 'ProdutoController@destroy')->name('produtos.apagar');
 Route::get('/produtos/editar/{id}', 'ProdutoController@edit')->name('produtos.editar');
-Route::patch('/produtos/salvar/{id}', 'ProdutoController@update')->name('produtos.update');
+Route::patch('/produtos/salvar/{id}', 'ProdutoController@update')->name('produtos.atualizar');
 

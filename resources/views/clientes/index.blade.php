@@ -1,9 +1,9 @@
-@extends('layout.app', ["current" => "produtos"])
+@extends('layout.app', ["current" => "clientes"])
 
 @section('body')
   <div class="card border">
     <div class="card-body">
-      <h5 class="card-title">Cadastro de Produtos</h5>
+      <h5 class="card-title">Cadastro de Clientes</h5>
       @if (session('mensagem_sucesso'))
           <div class="alert alert-success">
               {{ session('mensagem_sucesso') }}
@@ -15,30 +15,27 @@
               {{ session('mensagem_erro') }}
           </div>
       @endif
-      <table id="tabelaProdutos" class="table table-ordered table-hover">
+      <table id="tabelaClientes"class="table table-ordered table-hover">
         <thead>
           <tr>
             <th data-field="id">ID</th>
-            <th data-field="produto">Nome do produto</th>
-            <th data-field="preco">Preço</th>
+            <th data-field="nome">Nome do cliente</th>
             <th data-formatter="operateFormatter">Ações</th>
           </tr>
         </thead>
-        <tbody>
-        </tbody>
       </table>
     </div>
     <div class="card-footer">
-      <a href="{{route("produtos.novo")}}" class="btn btn-primary">Novo produto</a>
+      <a href="{{route('clientes.novo')}}" class="btn btn-primary" role="button">Nova cliente</a>
     </div>
   </div>
   @section('javascript')
       <script type="text/javascript">
 
-        var $tabelaProdutos = $("#tabelaProdutos");
+        var $tabelaClientes = $("#tabelaClientes");
         
-        $tabelaProdutos.bootstrapTable({
-          url:"{{route('produtos.listar')}}",
+        $tabelaClientes.bootstrapTable({
+          url:"{{route('clientes.listar')}}",
           locale: 'pt-BR',
           pagination:true,
           sidePagination:"client",
@@ -50,17 +47,17 @@
           },
           queryParams: function (p) {
             return {
-                params:p
+              params:p
             };
           },
         });
 
         function operateFormatter(value, row, index) {
-          var urlEdit = "{{ route('produtos.editar', ['id' => ':id']) }}"; 
+          var urlEdit = "{{ route('clientes.editar', ['id' => ':id']) }}"; 
 
           urlEdit = urlEdit.replace(":id", row.id);
 
-          var urlDelete = "{{ route('produtos.apagar', ['id' => ':id']) }}"; 
+          var urlDelete = "{{ route('clientes.apagar', ['id' => ':id']) }}"; 
 
           urlDelete = urlDelete.replace(":id", row.id);
           return [

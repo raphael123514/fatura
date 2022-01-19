@@ -10,7 +10,7 @@
           <p class="card-text">
             Cadastre os clientes.
           </p>
-          <a href="/categorias" class="btn btn-primary">Cadastre suas categorias</a>
+          <a href="{{route('clientes.index')}}" class="btn btn-primary">Cadastre seus clientes</a>
         </div>
       </div>
       <div class="card border border-primary">

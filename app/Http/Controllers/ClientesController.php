@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cliente;
 use Illuminate\Http\Request;
 
 class ClientesController extends Controller
@@ -13,7 +14,7 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        return view('categorias', ['categorias'=> $categorias]);
+        return view('clientes.index');
     }
 
     /**
@@ -23,7 +24,7 @@ class ClientesController extends Controller
      */
     public function create()
     {
-        return view('novaCategoria');
+        return view('clientes.form');
     }
 
     /**
@@ -34,10 +35,12 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-        $cat = new Categoria();
-        $cat->nome = $request->input("nomeCategoria");
-        $cat->save();
-        return redirect('/categorias');
+        $cli = new Cliente();
+        $cli->nome = $request->input("nome");
+        $cli->email = $request->input("email");
+        $cli->save();
+        \Session::flash('mensagem_sucesso','Cliente criado com sucesso!');
+        return redirect()->route('clientes.index');
     }
 
     /**
@@ -59,12 +62,11 @@ class ClientesController extends Controller
      */
     public function edit($id)
     {
-        $categoria = Categoria::find($id);
+        $cliente = Cliente::find($id);
 
-        if (isset($categoria)) {
-            return view('editarCategoria', ['categoria' => $categoria]);
+        if (isset($cliente)) {
+            return view('clientes.form', ['cliente' => $cliente]);
         }
-        return redirect('/categorias');
 
     }
 
@@ -77,14 +79,16 @@ class ClientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categoria = Categoria::find($id);
+        $cliente = Cliente::find($id);
 
-        if (isset($categoria)) {
-            $categoria->nome = $request->input('nomeCategoria');
-            $categoria->save();
+        if (isset($cliente)) {
+            $cliente->nome = $request->input('nome');
+            $cliente->email = $request->input('email');
+            $cliente->save();
         }
+        \Session::flash('mensagem_sucesso','Cliente atualizado com sucesso!');
 
-        return redirect('/categorias');
+        return redirect()->route('clientes.index');
     }
 
     /**
@@ -95,13 +99,19 @@ class ClientesController extends Controller
      */
     public function destroy($id)
     {
-        $categoria = Categoria::find($id);
+        $cliente = Cliente::find($id);
 
-        if (isset($categoria)) {
-            $categoria->delete();
+        if (isset($cliente)) {
+            $cliente->delete();
         }
 
-        return redirect('/categorias');
+        return redirect()->route('clientes.index');
+    }
+
+    public function listar(Request $request)
+    {
+        $clientes = Cliente::all();
+        return $clientes;
     }
 
 }
