@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Categoria;
 use Illuminate\Http\Request;
 
-class CategoriaController extends Controller
+class ClientesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,6 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::all();
         return view('categorias', ['categorias'=> $categorias]);
     }
 
@@ -106,9 +104,4 @@ class CategoriaController extends Controller
         return redirect('/categorias');
     }
 
-    public function indexJson(Request $request)
-    {
-        $cat = Categoria::all();
-        return json_encode($cat);
-    }
 }

@@ -17,16 +17,13 @@ class ProdutoController extends Controller
     {
         $produtos = Produto::select(
             'produtos.id',
-            'produtos.nome',
-            'produtos.estoque',
+            'produtos.produto',
             'produtos.preco',
-            'categorias.nome as categoria',
 
         )
-        ->join('categorias', 'categorias.id', 'produtos.categoria_id')
         ->get();
 
-        return view('produtos', ['produtos' => $produtos]);
+        return view('produtos.index', ['produtos' => $produtos]);
 
     }
 
@@ -45,8 +42,7 @@ class ProdutoController extends Controller
      */
     public function create()
     {   
-        $categorias = Categoria::all();
-        return view('novoProduto', ['categorias' =>$categorias]);
+        return view('produtos.form');
     }
 
     /**
@@ -57,16 +53,14 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        
         $produto = new Produto();
         $produto->fill([
-            'nome' => $request->nomeProduto,
-            'categoria_id' => $request->categoria_id,
-            'estoque' => $request->qtde,
+            'produto' => $request->nomeProduto,
             'preco' => $request->preco,
         ]);
         $produto->save();
-        return json_encode($produto);
+        \Session::flash('mensagem_sucesso','Produto criado com sucesso!');
+        return redirect()->route('produtos.index');
     }
 
     /**
@@ -95,9 +89,8 @@ class ProdutoController extends Controller
      */
     public function edit($id)
     {
-        $categorias = Categoria::all();
         $produto = Produto::find($id);
-        return view('editarProdutos', ['categorias' => $categorias, 'produto' => $produto]);
+        return view('produtos.form', ['produto' => $produto]);
     }
 
     /**
@@ -113,14 +106,13 @@ class ProdutoController extends Controller
 
         if (isset($produto)) {
             $produto->update([
-                'nome' => $request->nomeProduto,
-                'categoria_id' => $request->categoria_id,
-                'estoque' => $request->qtde,
+                'produto' => $request->nomeProduto,
                 'preco' => $request->preco,
             ]);
+            \Session::flash('mensagem_sucesso','Produto atualizado com sucesso!');
+    
+            return redirect()->route('produtos.index');
         }
-
-        return json_encode($produto);
 
     }
 
@@ -136,11 +128,17 @@ class ProdutoController extends Controller
 
         if (isset($produtos)) {
             $produtos->delete();
-            return response("OK", 200);
+            return redirect()->route('produtos.index');
         }
 
         return response("ERRO", 404);
 
 
+    }
+
+    public function listar(Request $request)
+    {
+        $produtos = Produto::all();
+        return $produtos;
     }
 }

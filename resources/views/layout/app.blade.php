@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
   <title>Cadastro de Produtos</title>
   <meta name="csrf-token" content="{{csrf_token()}}">
   <style>
@@ -15,7 +16,7 @@
 </head>
 <body>
   <div class="container">
-    @component('componente_navbar', ["current" => $current])
+    @component('componentes.componente_navbar', ["current" => $current])
     @endcomponent
     <main role="main">
       @hasSection ('body')
@@ -24,7 +25,7 @@
     </main>
   </div>
   <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
-
+  <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
   @hasSection ('javascript')
     @yield('javascript')
   @endif
