@@ -348,7 +348,7 @@
             }
           });
 
-          $("#msg_modal-gerar-fatura").html("<div class=\"alert alert-success\" role=\"alert\">Produto inserido com sucesso</div>")
+          $("#msg_modal-gerar-fatura").html("<div class=\"alert alert-success\" role=\"alert\">Fatura inserida com sucesso</div>")
 
         }
 
