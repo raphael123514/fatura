@@ -15,7 +15,11 @@
               {{ session('mensagem_erro') }}
           </div>
       @endif
-      <table id="tabelaClientes"class="table table-ordered table-hover">
+      <table 
+        id="tabelaClientes"
+        class="table table-ordered table-hover"
+        data-search="true"
+        >
         <thead>
           <tr>
             <th data-field="id">ID</th>
