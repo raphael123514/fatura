@@ -11,6 +11,14 @@ class Cliente extends Model
         'id',
         'nome',
         'email',
-        'id_produto',
     ];
+
+    public function produtos()
+    {
+        try {
+            return $this->belongsToMany('App\Produto', 'clientes_produtos');
+        }  catch (\Exception $Exception) {
+            abort(500, $Exception->getMessage());
+        }
+    }
 }

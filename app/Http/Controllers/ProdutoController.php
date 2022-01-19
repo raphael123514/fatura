@@ -141,4 +141,10 @@ class ProdutoController extends Controller
         $produtos = Produto::all();
         return $produtos;
     }
+
+    public function autocomplete(Request $request)
+    {
+        $produtos = Produto::select('id', 'produto as text')->get();
+        return $produtos;
+    }
 }

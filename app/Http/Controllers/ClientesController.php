@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\ClienteProduto;
 use Illuminate\Http\Request;
 
 class ClientesController extends Controller
@@ -79,16 +80,31 @@ class ClientesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $produtos = !empty(json_decode($request->produtosVinc)) ? json_decode($request->produtosVinc, 1) : [];
+        
+        $cliente = new Cliente;         
         $cliente = Cliente::find($id);
 
         if (isset($cliente)) {
-            $cliente->nome = $request->input('nome');
-            $cliente->email = $request->input('email');
-            $cliente->save();
+            $dado = [
+                'nome' => $request->nome,
+                'email' => $request->email,
+            ];
+
+            $cliente->update($dado);
         }
+
+        if (!empty($produtos)) {
+            $arrayProdutosVinc = [];
+            for ($i=0; $i < sizeof($produtos); $i++) { 
+                $arrayProdutosVinc[$produtos[$i]['id']] = ["cliente_id" => $cliente->id, "produto_id" => $produtos[$i]['id']];
+            }
+            $cliente->produtos()->sync($arrayProdutosVinc);
+        }
+        
         \Session::flash('mensagem_sucesso','Cliente atualizado com sucesso!');
 
-        return redirect()->route('clientes.index');
+        return response('Cliente atualizado com sucesso', 200);
     }
 
     /**
@@ -112,6 +128,15 @@ class ClientesController extends Controller
     {
         $clientes = Cliente::all();
         return $clientes;
+    }
+
+    public function listarProdutos(Request $request )
+    {
+        $id = $request->id;
+        $produtos = ClienteProduto::where('cliente_id', $id)
+                    ->leftJoin('produtos', 'produtos.id', 'clientes_produtos.produto_id')->get();
+        
+        return $produtos;
     }
 
 }

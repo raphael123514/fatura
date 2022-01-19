@@ -18,9 +18,6 @@ class CreateClientesTable extends Migration
             $table->string('nome');
             $table->string('email');
 
-            $table->integer('id_produto')->unsigned()->nullable();
-            $table->foreign('id_produto')->references('id')->on('produtos');
-
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::get('/clientes', 'ClientesController@index')->name('clientes.index');
 Route::get('/clientes/listar', 'ClientesController@listar')->name('clientes.listar');
+Route::get('/clientes/produtos/listarProdutos', 'ClientesController@listarProdutos')->name('clientes.listarProdutos');
 Route::get('/clientes/novo', 'ClientesController@create')->name('clientes.novo');
 Route::post('/clientes/salvar', 'ClientesController@store')->name('clientes.salvar');
 Route::delete('/clientes/apagar/{id}', 'ClientesController@destroy')->name('clientes.apagar');
@@ -29,6 +30,7 @@ Route::patch('/clientes/salvar/{id}', 'ClientesController@update')->name('client
 // PRODUTOS
 Route::get('/produtos', 'ProdutoController@indexView')->name('produtos.index');
 Route::get('/produtos/listar', 'ProdutoController@listar')->name('produtos.listar');
+Route::get('/produtos/autocomplete', 'ProdutoController@autocomplete')->name('produtos.autocomplete');
 Route::get('/produtos/novo', 'ProdutoController@create')->name('produtos.novo');
 Route::post('/produtos/salvar', 'ProdutoController@store')->name('produtos.salvar');
 Route::delete('/produtos/apagar/{id}', 'ProdutoController@destroy')->name('produtos.apagar');
