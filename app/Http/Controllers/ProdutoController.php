@@ -147,4 +147,15 @@ class ProdutoController extends Controller
         $produtos = Produto::select('id', 'produto as text')->get();
         return $produtos;
     }
+
+    public function geraValorFatura(Request $request)
+    {
+        $produtos = $request->produtos;
+        $totalSoma = 0;
+        foreach ($produtos as $key => $produto) {
+            $prod = Produto::find($produto['id']);
+            $totalSoma = $totalSoma + $prod->preco;
+        }
+        return $totalSoma;
+    }
 }
